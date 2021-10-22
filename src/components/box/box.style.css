@@ -1,5 +1,5 @@
-.boxBtn{
-    width:calc(100%/3);
-    height:calc(100%/3);
-    font-size:10rem;
+.boxBtn {
+  width: calc(100% / 3);
+  height: calc(100% / 3);
+  font-size: 10vmin;
 }

@@ -14,16 +14,17 @@ const Game = () => {
     "",
     "",
   ]);
+  const [playerState, setPlayerState] = useState("x");
 
   const onBtnClick =(e)=>{
     let newBordState=[...boardState];
-    newBordState[e.target.id] = "x";
+    console.log("player is :",playerState);
+    newBordState[e.target.id] = playerState;
+    setPlayerState(playerState==="x"?"o":"x");
     setBoardState(newBordState);
   }
   return (
     <div className="game">
-      {console.log(boardState)}
-      {console.log("ingme")}
       <Board boardState={boardState} onClick={onBtnClick} />
     </div>
   );
