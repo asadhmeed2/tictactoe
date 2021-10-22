@@ -1,5 +1,6 @@
 import React from 'react';
 import Box from "../box/box.component"
+import "./board.style.css"
 
 
 const Board =({boardState ,onClick})=>{

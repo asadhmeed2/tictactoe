@@ -1,13 +1,31 @@
-import React,{setState} from "react";
+import React, { useState } from "react";
 import Board from "../board/board.component";
+import "./game.style.css";
 
-const Board = () => {
-    const [boardState,setBoardState] = setState(Array(9));
+const Game = () => {
+  const [boardState, setBoardState] = useState([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
+
+  const onBtnClick =(e)=>{
+    let newBordState=[...boardState];
+    newBordState[e.target.id] = "x";
+    setBoardState(newBordState);
+  }
   return (
     <div className="game">
-        console.log("inGame");
-     <Board />
+      {console.log(boardState)}
+      {console.log("ingme")}
+      <Board boardState={boardState} onClick={onBtnClick} />
     </div>
   );
 };
-export default Board;
+export default Game;

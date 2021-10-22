@@ -1,0 +1,8 @@
+.game {
+  width: 97vw;
+  height: 97vh;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
