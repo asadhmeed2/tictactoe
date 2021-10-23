@@ -13,11 +13,12 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 ### `Thought proccess`
-split the project to smaller proccess
-   1.understand the game functionality
-   2.build basic ui 
-   3.split the project to comonents
-   4.build components from the smallest to the main one 
+split the project to smaller proccess.
+
+   1. understand the game functionality.
+   2. build basic ui. 
+   3. split the project to comonents
+   4. build components from the smallest to the main one 
 
 #### `game component`
     contains all the game states and logic 
