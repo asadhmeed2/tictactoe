@@ -2,11 +2,13 @@ import React from "react";
 import Box from "../box/box.component";
 import "./board.style.css";
 
-const Board = ({ boardState, onClick, onBoardClick }) => {
+const Board = ({ boardState, onClick}) => {
   return (
-    <div className="gameBoard" onClick={onBoardClick}>
+    <div className="gameBoard">
       {boardState.map((state, index) => {
-        return <Box value={state} key={index} id={index} onClick={onClick} />;
+        return (
+          <Box value={state} key={index} id={index} onBtnClick={onClick} />
+        );
       })}
     </div>
   );

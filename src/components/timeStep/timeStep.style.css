@@ -1,0 +1,15 @@
+.timeStep {
+  padding: 0.5vmin;
+  background: black;
+  color: aliceblue;
+  border-radius:5px;
+  margin-bottom:0.5vmin;
+  cursor: pointer;
+  transform:scale(1);
+  transition: transform 0.3s ease-in-out;
+  font-size: 1vmin;
+}
+.timeStep:hover{
+    transform :scale(1.05);
+    
+}

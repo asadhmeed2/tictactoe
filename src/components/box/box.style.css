@@ -3,3 +3,10 @@
   height: calc(100% / 3);
   font-size: 10vmin;
 }
+.x{
+  background:rgb(3, 3, 3);
+  color: red;
+}
+.o{
+  color:green;
+}

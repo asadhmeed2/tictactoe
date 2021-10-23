@@ -1,8 +1,9 @@
-.gameBoard{
-    width: 50vmin;
-    height: 50vmin;
-    display: flex;
+.gameBoard {
+  width: 50vmin;
+  height: 50vmin;
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
-    background:black;
+  background: rgba(90, 87, 87,0.5);
+  padding: 2vmin;
 }

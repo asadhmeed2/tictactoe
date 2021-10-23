@@ -1,26 +1,27 @@
 import React, { useState } from "react";
 import Board from "../board/board.component";
+import TimeStepContainer from "../timeStep/timeStepContainer";
 import "./game.style.css";
 
 const Game = () => {
-  const [boardState, setBoardState] = useState([
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-  ]);
   const [playerState, setPlayerState] = useState("x");
-  const [timeState, setTimeState] = useState([]);
   const [stepNumber, setStepNumber] = useState(0);
   const [thereIsWinner, setThereIsWinner] = useState(false);
   const [IsItDrow, setIsItDrow] = useState(false);
-  const [stateListClicked, setStateListClicked] = useState(false);
-
+  const [timeState, setTimeState] = useState([
+    {
+      newBoardState: Array(9).fill(""),
+      currentStep: 0,
+      nextPlayer: "x",
+      isItDrowTemp: false,
+      thereIsWinnerTemp: false,
+    },
+  ]);
+  /**
+   *
+   * @param {*} newBoardState
+   * @returns
+   */
   const checkWinner = (newBoardState) => {
     const winingStrick = [
       [0, 1, 2],
@@ -45,75 +46,75 @@ const Game = () => {
     }
     return null;
   };
+
   const onBtnClick = (e) => {
+    const timePoints = timeState.slice(0, stepNumber + 1);
+    const board = timePoints[stepNumber].newBoardState;
+    let nextPlayer = "";
     if (!thereIsWinner && !IsItDrow) {
-      let newBoardState = [...boardState];
+      let newBoardState = [...board];
       if (!newBoardState[e.target.id]) {
         newBoardState[e.target.id] = playerState;
-        let currentStep = stepNumber + 1;
+        const currentStep = stepNumber + 1;
         setStepNumber(currentStep);
-        let nextPlayer = playerState === "x" ? "o" : "x";
-        setPlayerState(nextPlayer);
-        setBoardState(newBoardState);
         let winner = checkWinner(newBoardState);
         let thereIsWinnerTemp = false;
         let isItDrowTemp = false;
         if (winner) {
           setThereIsWinner(true);
           thereIsWinnerTemp = true;
-        }
+        }else
         if (currentStep === 9) {
           setIsItDrow(true);
           isItDrowTemp = true;
+        } else {
+          nextPlayer = playerState === "x" ? "o" : "x";
+          setPlayerState(nextPlayer);
         }
         setTimeState([
-          ...timeState,
+          ...timePoints,
           {
-            newBoardState,
-            currentStep,
-            nextPlayer,
-            isItDrowTemp,
-            thereIsWinnerTemp,
+            newBoardState: newBoardState,
+            currentStep: currentStep,
+            nextPlayer: nextPlayer,
+            isItDrowTemp: isItDrowTemp,
+            thereIsWinnerTemp: thereIsWinnerTemp,
           },
         ]);
       }
     }
   };
   const onTimeStepClick = (e) => {
-    setStateListClicked(true);
-    setBoardState(timeState[e.target.id].newBoardState);
-    setStepNumber(timeState[e.target.id].currentStep);
-    setPlayerState(timeState[e.target.id].nextPlayer);
-    setIsItDrow(timeState[e.target.id].isItDrowTemp);
-    setThereIsWinner(timeState[e.target.id].thereIsWinnerTemp);
+    console.log(e.target.id);
+    setStepNumber(parseInt(e.target.id));
+    setPlayerState(timeState[parseInt(e.target.id)].nextPlayer);
+    setIsItDrow(timeState[parseInt(e.target.id)].isItDrowTemp);
+    setThereIsWinner(timeState[parseInt(e.target.id)].thereIsWinnerTemp);
   };
 
-  const onBoardClick = () => {
-    if (stateListClicked) {
-      let newTimeState = [...timeState];
-      newTimeState = newTimeState.slice(
-        0,
-        timeState[stepNumber].currentStep
-      );
-      setTimeState(newTimeState);
-      setStateListClicked(false);
-    }
-  };
   return (
     <div className="game">
       <Board
-        boardState={boardState}
+        boardState={timeState[stepNumber].newBoardState}
         onClick={onBtnClick}
-        onBoardClick={onBoardClick}
       />
       <div className="footer">
-        {timeState.map((el, i) => {
-          return (
-            <div className="timeStep" onClick={onTimeStepClick} key={i} id={i}>
-              {i + 1}
-            </div>
-          );
-        })}
+        <div className="time">
+          <h3>History</h3>
+          <TimeStepContainer
+            timeState={timeState}
+            onTimeStepClick={onTimeStepClick}
+          />
+        </div>
+        <div className="winner">
+          <h3>
+            {thereIsWinner
+              ? `the Winner is : ${playerState}`
+              : IsItDrow
+              ? "it is a Drow"
+              : `player turn is : ${playerState}`}
+          </h3>
+        </div>
       </div>
     </div>
   );
