@@ -16,9 +16,10 @@ You will also see any lint errors in the console.
 split the project to smaller proccess.
 
    1. understand the game functionality.
-   2. build basic ui. 
-   3. split the project to comonents
-   4. build components from the smallest to the main one 
+   2. build basic UI. 
+   3. split the project to components.
+   4. build components from the smallest to the main one.
+   5. style the UI.
 
 #### `game component`
     contains all the game states and logic 
