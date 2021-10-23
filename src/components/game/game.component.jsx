@@ -18,6 +18,8 @@ const Game = () => {
   const [timeState, setTimeState] = useState([]);
   const [stepNumber, setStepNumber] = useState(0);
   const [thereIsWinner, setThereIsWinner] = useState(false);
+  const [IsItDrow, setIsItDrow] = useState(false);
+  const [stateListClicked, setStateListClicked] = useState(false);
 
   const checkWinner = (newBoardState) => {
     const winingStrick = [
@@ -38,45 +40,77 @@ const Game = () => {
         newBoardState[a] === newBoardState[c]
       );
     });
-    console.log(thereIsWin);
     if (thereIsWin.length) {
       return thereIsWin;
     }
     return null;
   };
   const onBtnClick = (e) => {
-    if (!thereIsWinner) {
+    if (!thereIsWinner && !IsItDrow) {
       let newBoardState = [...boardState];
       if (!newBoardState[e.target.id]) {
         newBoardState[e.target.id] = playerState;
         let currentStep = stepNumber + 1;
         setStepNumber(currentStep);
-        setPlayerState(playerState === "x" ? "o" : "x");
+        let nextPlayer = playerState === "x" ? "o" : "x";
+        setPlayerState(nextPlayer);
         setBoardState(newBoardState);
-        setTimeState([...timeState, newBoardState]);
         let winner = checkWinner(newBoardState);
-        // console.log(winner);
+        let thereIsWinnerTemp = false;
+        let isItDrowTemp = false;
         if (winner) {
           setThereIsWinner(true);
+          thereIsWinnerTemp = true;
         }
         if (currentStep === 9) {
-          console.log("drow");
+          setIsItDrow(true);
+          isItDrowTemp = true;
         }
+        setTimeState([
+          ...timeState,
+          {
+            newBoardState,
+            currentStep,
+            nextPlayer,
+            isItDrowTemp,
+            thereIsWinnerTemp,
+          },
+        ]);
       }
+    }
+  };
+  const onTimeStepClick = (e) => {
+    setStateListClicked(true);
+    setBoardState(timeState[e.target.id].newBoardState);
+    setStepNumber(timeState[e.target.id].currentStep);
+    setPlayerState(timeState[e.target.id].nextPlayer);
+    setIsItDrow(timeState[e.target.id].isItDrowTemp);
+    setThereIsWinner(timeState[e.target.id].thereIsWinnerTemp);
+  };
+
+  const onBoardClick = () => {
+    if (stateListClicked) {
+      let newTimeState = [...timeState];
+      newTimeState.length = timeState[stepNumber].currentStep;
+      setTimeState(newTimeState);
+      setStateListClicked(false);
     }
   };
   return (
     <div className="game">
-      <Board boardState={boardState} onClick={onBtnClick} />
+      <Board
+        boardState={boardState}
+        onClick={onBtnClick}
+        onBoardClick={onBoardClick}
+      />
       <div className="footer">
         {timeState.map((el, i) => {
           return (
-            <div className="timeStep" key={i} id={i}>
+            <div className="timeStep" onClick={onTimeStepClick} key={i} id={i}>
               {i + 1}
             </div>
           );
         })}
-        
       </div>
     </div>
   );
