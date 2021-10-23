@@ -91,7 +91,10 @@ const Game = () => {
   const onBoardClick = () => {
     if (stateListClicked) {
       let newTimeState = [...timeState];
-      newTimeState.length = timeState[stepNumber].currentStep;
+      newTimeState = newTimeState.slice(
+        0,
+        timeState[stepNumber].currentStep
+      );
       setTimeState(newTimeState);
       setStateListClicked(false);
     }
